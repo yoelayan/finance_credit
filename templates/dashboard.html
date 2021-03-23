@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}
+    Escritorio
+{% endblock %}
+{% block body %}
+
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title"><h2 class="title center-align">Titulo</h2></div>
+        </div>
+        <div class="card-body">
+            <div class="card-content">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa dolor maiores, minima nam nemo, neque officia repudiandae sed sit temporibus, vel voluptate voluptatem! Accusamus adipisci, eos expedita ipsam quidem sunt!</p>
+                <a class="waves-effect waves-light btn" href="{% url 'client_index' %}">ir a clientes</a>
+            </div>
+        </div>
+        <div class="card-action">
+            <div class="card-link">
+                <a class="cancel-link">close</a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

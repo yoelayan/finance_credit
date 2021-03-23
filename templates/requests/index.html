@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% block title %}
+    Listado de clientes
+{% endblock %}
+{% block body %}
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">
+                <h2 class="title center-align"> Listado de Clientes</h2>
+            </div>
+            <div class="card-body">
+                <div class="card-content">
+                    <div class="row">
+                        <div class="col s12">
+                            <ul class="tabs">
+                                <li class="tab col s3"><a href="#test1">Aprobados</a></li>
+                                <li class="tab col s3"><a class="active" href="#test2">Por Aprobar</a></li>
+                            </ul>
+                        </div>
+                        <div id="test1" class="col s12">
+                            {% for client in clients %}
+                                <div class="card col s12 m6 l4 xl3" style="height: 300px">
+                                    <div class="card-content">
+                                        <span class="card-subtitle activator grey-text text-darken-4">{{ client.first_name }} {{ client.last_name }}<i class="material-icons right">more_vert</i></span>
+                                        <p>solicitudes: {{ client.requests_credits|length }}</p>
+                                        <p> deuda: {{ client.debt_mount }}</p>
+                                        <p> puntuación: {{ client.debt_score }}</p>
+                                        <p> indicador artificial: {{ client.artificial_indicator }}</p>
+
+                                    </div>
+                                    <div class="card-reveal indigo lighten-4">
+                                        <span class="card-title grey-text text-darken-4">{{ client.first_name }} {{ client.last_name }}<i class="material-icons right">close</i></span>
+                                        {% if client.requests_credits %}
+                                            {% for request_credit in client.requests_credits %}
+                                                {% if request_credit.is_approved == True %}
+                                                    <p>Solicitud de: {{ request_credit.request_mount }}</p>
+                                                    <p><a class="waves-effect waves-light btn" href="{% url 'change_approved' request_credit.id %}">Desaprobar</a></p>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% else %}
+                                            <p>Sin solicitudes</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div id="test2" class="col s12">
+                            {% for client in clients %}
+                                <div class="card col s12 m6 l4 xl3" style="height: 300px">
+                                    <div class="card-content">
+                                        <span class="card-subtitle activator grey-text text-darken-4">{{ client.first_name }} {{ client.last_name }}<i class="material-icons right">more_vert</i></span>
+                                        <p>solicitudes: {{ client.requests_credits|length }}</p>
+                                        <p> deuda: {{ client.debt_mount }}</p>
+                                        <p> puntuación: {{ client.debt_score }}</p>
+                                        <p> indicador artificial: {{ client.artificial_indicator }}</p>
+                                    </div>
+                                    <div class="card-reveal indigo lighten-4">
+                                        <span class="card-title grey-text text-darken-4">{{ client.first_name }} {{ client.last_name }}<i class="material-icons right">close</i></span>
+                                        {% if client.requests_credits %}
+                                            {% for request_credit in client.requests_credits %}
+                                                {% if request_credit.is_approved == False %}
+                                                    <p>Solicitud de: {{ request_credit.request_mount }}</p>
+                                                    <p><a class="waves-effect waves-light btn" href="{% url 'change_approved' request_credit.id %}">Aprobar</a></p>
+                                                    <p><a class="waves-effect waves-light btn" href="{% url 'delete_request_credit' request_credit.id %}">Rechazar</a></p>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% else %}
+                                            <p>Sin solicitudes</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block scripts %}
+    <!-- MDB -->
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"
+    ></script>
+    <script>
+        $(document).ready(function(){
+            $('.tabs').tabs();
+        });
+
+    </script>
+{% endblock %}
+
